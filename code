@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Be My Valentine Daniela</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cursive', sans-serif;
+      background: linear-gradient(45deg, #ffb3b3, #ff80ab);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+      color: #ffffff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      color: #ff4081;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      font-family: 'Pacifico', cursive;
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 10px #ff80ab, 0 0 20px #ff80ab, 0 0 30px #ff80ab;
+      }
+      100% {
+        text-shadow: 0 0 20px #ff4081, 0 0 30px #ff4081, 0 0 40px #ff4081;
+      }
+    }
+
+    .heart {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      background-color: #e91e63;
+      transform: rotate(-45deg);
+      margin-bottom: 20px;
+      animation: heartbeat 1.5s infinite;
+    }
+
+    .heart:before,
+    .heart:after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #e91e63;
+    }
+
+    .heart:before {
+      top: -50px;
+      left: 0;
+    }
+
+    .heart:after {
+      left: 50px;
+      top: 0;
+    }
+
+    .btn {
+      font-size: 1.5em;
+      padding: 15px 30px;
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+      background-color: #f50057;
+    }
+
+    .btn:active {
+      transform: scale(0.9);
+    }
+
+    .sad-btn {
+      background-color: #9e1b32;
+      color: #f1f1f1;
+    }
+
+    .sad-btn:hover {
+      transform: scale(1.1);
+      background-color: #f44336;
+    }
+
+    .response {
+      font-size: 2em;
+      margin-top: 20px;
+      color: #ff80ab;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .response.show {
+      opacity: 1;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes heartbeat {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* Confetti Animation */
+    .confetti {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .confetti .piece {
+      position: absolute;
+      background: #ff4081;
+      width: 15px;
+      height: 15px;
+      animation: confettiFall 3s linear infinite;
+      transform-origin: center;
+    }
+
+    /* Heart-shaped confetti */
+    .confetti .heart-piece {
+      width: 20px;
+      height: 20px;
+      background-color: #ff80ab;
+      clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 50% 75%, 20% 100%, 0% 35%);
+      animation: confettiFall 3s linear infinite;
+    }
+
+    /* Confetti falling effect */
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    /* Love Letter Style */
+    .love-letter {
+      font-size: 1.5em;
+      padding: 30px;
+      background-color: #fff;
+      color: #ff4081;
+      border-radius: 20px;
+      border: 2px solid #ff80ab;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      max-width: 80%;
+      margin-top: 30px;
+      display: none;
+      transition: opacity 2s ease;
+    }
+
+    .love-letter h2 {
+      font-size: 2.5em;
+      color: #ff4081;
+      margin-bottom: 20px;
+    }
+
+    .love-letter p {
+      font-size: 1.2em;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="heart"></div>
+  <h1>Be My Valentine, Daniela? 💖</h1>
+  <button class="btn" id="yesButton">Yes</button>
+  <button class="btn sad-btn" id="noButton">No</button>
+
+  <!-- Confetti Effect -->
+  <div class="confetti" id="confettiContainer"></div>
+
+  <!-- Love Letter -->
+  <div id="loveLetter" class="love-letter hidden">
+    <h2>Thank You for Being My Valentine, My Love 💖</h2>
+    <p>
+      My dearest Daniela, <br><br>
+      From the moment we met, my world has been brighter, and my heart has been filled with love. Every day with you feels like a beautiful adventure, and I can't wait to see what the future holds for us. You are the most amazing person, and I am so incredibly lucky to have you by my side.
+      <br><br>
+      Thank you for all the joy and love you've brought into my life. I promise to always cherish and adore you, forever and always. You are my one true love, and I will continue to make every moment we share special.
+      <br><br>
+      With all my heart, ❤️
+      <br><br>
+      [Your Name]
+    </p>
+  </div>
+
+  <script>
+    // Sound effects
+    const clickSound = new Audio('https://www.soundjay.com/button/beep-07.wav'); // Add your own sound link
+
+    // Array of sad messages for the "No" button, but we will change Yes button's text
+    const sadMessages = [
+      "You're joking right?",
+      "I can't believe it...",
+      "You're breaking my heart!",
+      "I thought we were meant to be...",
+      "Why would you do this to me?",
+      "I'm so heartbroken... 💔",
+      "You're really gonna make me cry, huh? 😢",
+      "Do you even love me?"
+    ];
+
+    const yesMessages = [
+      "You really mean it? 💕",
+      "Aww, you're making me smile! 😊",
+      "I can't believe you're saying yes! 😍",
+      "I knew you'd say yes! 😘",
+      "YAYYY! You're my Valentine! 💖",
+      "My heart is so happy right now! 💖"
+    ];
+
+    let sadMessageIndex = 0; // Track the sad messages
+    let yesMessageIndex = 0; // Track the Yes button text messages
+    let yesClicked = false;  // Track whether "Yes" has been clicked
+    let noClicked = false;   // Track whether "No" has been clicked
+
+    // Function to generate confetti
+    function generateConfetti() {
+      const confettiContainer = document.getElementById("confettiContainer");
+      for (let i = 0; i < 100; i++) {
+        let confettiPiece = document.createElement("div");
+        confettiPiece.classList.add("piece");
+        
+        // Make the confetti heart-shaped
+        if (Math.random() < 0.5) {
+          confettiPiece.classList.add("heart-piece");
+        }
+        
+        confettiPiece.style.left = `${Math.random() * 100}%`;
+        confettiPiece.style.animationDuration = `${Math.random() * 2 + 2}s`;
+        confettiPiece.style.animationDelay = `${Math.random() * 1}s`;
+        confettiContainer.appendChild(confettiPiece);
+      }
+    }
+
+    // Function to handle "Yes" button click
+    document.getElementById("yesButton").addEventListener("click", function() {
+      clickSound.play(); // Play click sound
+      if (noClicked && yesMessageIndex === yesMessages.length) {
+        // Only change text to "Too late" if all Yes messages have been cycled through and No was clicked
+        document.getElementById("yesButton").textContent = "Too late, you already clicked No.";
+        document.getElementById("yesButton").disabled = true; // Disable the "Yes" button
+        return; // Prevent further changes to the "Yes" button
+      }
+
+      if (!yesClicked) {
+        yesClicked = true; // Mark that "Yes" has been clicked
+      }
+
+      // Change the text on the Yes button dynamically
+      if (yesMessageIndex < yesMessages.length) {
+        document.getElementById("yesButton").textContent = yesMessages[yesMessageIndex];
+        yesMessageIndex++;
+      } else {
+        document.getElementById("yesButton").textContent = "IT'S CONFIRMED YOU ARE MY VALENTINE!";
+        generateConfetti(); // Trigger confetti animation when they say yes
+        setTimeout(() => {
+          // Display the love letter after a delay
+          document.getElementById("loveLetter").classList.remove("hidden");
+        }, 2000); // Show the letter after 2 seconds
+      }
+    });
+
+    // Function to handle "No" button click
+    document.getElementById("noButton").addEventListener("click", function() {
+      clickSound.play(); // Play click sound
+      if (yesClicked && sadMessageIndex === sadMessages.length) {
+        // Only show "You already pressed Yes" if all No messages have been cycled through and Yes was clicked
+        document.getElementById("noButton").textContent = "You already pressed Yes.";
+        document.getElementById("noButton").disabled = true; // Disable the "No" button
+        return; // Prevent further changes to the "No" button
+      }
+
+      if (!noClicked) {
+        noClicked = true; // Mark that "No" has been clicked
+      }
+
+      if (sadMessageIndex < sadMessages.length) {
+        // Show the sad messages on the "No" button
+        document.getElementById("noButton").textContent = sadMessages[sadMessageIndex];
+        sadMessageIndex++;
+      } else {
+        // Disable the "No" button and show the final message
+        document.getElementById("noButton").textContent = "Button disabled. Now you have to press Yes.";
+        document.getElementById("noButton").disabled = true; // Disable button after too many "No"s
+      }
+
+      noClicked = true; // Mark that "No" has been clicked
+    });
+  </script>
+</body>
+</html>
